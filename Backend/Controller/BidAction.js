@@ -65,6 +65,10 @@ exports.placeBid = async (req, res) => {
     }
 
     await bid.save();
+
+    // Emit bid update to clients
+    req.app.get('io').emit('bidUpdate', { bidId: bid._id, participantId: userId, itemId, amount });
+
     res.status(200).json(bid);
   } catch (error) {
     res.status(400).json({ error: error.message });
