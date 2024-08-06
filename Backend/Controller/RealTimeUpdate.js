@@ -1,7 +1,7 @@
 const leaderboard  = (req, res,next) => {
     res.json({
         success: true,
-        message: 'Bid Invited'
+        message: 'Bid updated'
     })
 }
 
