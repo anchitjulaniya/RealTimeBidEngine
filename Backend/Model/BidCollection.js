@@ -1,31 +1,29 @@
-const mongoose = require('mongoose')
-const BidCollectionSchema = new mongoose.Schema({
-    "_id": "ObjectId",
-    "title": "string",
-    "bidItems": [
-      {
-        "itemId": "ObjectId",
-        "description": "string",
-        "currentHighestBid": "number"
-      }
-    ],
-    "startTime": "ISODate",
-    "endTime": "ISODate",
-    "status": "enum", // "draft", "published", "closed"
-    "participants": [
-      {
-        "userId": "ObjectId",
-        "bids": [
-          {
-            "itemId": "ObjectId",
-            "amount": "number"
-          }
-        ]
-      }
-    ]
-  }
-  )
+// models/Bid.js
+const mongoose = require('mongoose');
 
-  const BidCollectionModel = mongoose.model('BidCollection', BidCollectionSchema)
+const BidItemSchema = new mongoose.Schema({
+  itemId: mongoose.Schema.Types.ObjectId,
+  description: String,
+  currentHighestBid: Number
+});
 
-  module.exports = BidCollectionModel
+const BidSchema = new mongoose.Schema({
+  title: String,
+  bidItems: [BidItemSchema],
+  startTime: Date,
+  endTime: Date,
+  status: {
+    type: String,
+    enum: ['draft', 'published', 'closed'],
+    default: 'draft'
+  },
+  participants: [{
+    userId: mongoose.Schema.Types.ObjectId,
+    bids: [{
+      itemId: mongoose.Schema.Types.ObjectId,
+      amount: Number
+    }]
+  }]
+});
+
+module.exports = mongoose.model('Bid', BidSchema);

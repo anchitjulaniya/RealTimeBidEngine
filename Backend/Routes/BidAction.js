@@ -1,10 +1,18 @@
-const express = require('express')
-const ActionController = require('../Controller/BidAction')
+// routes/bidParticipationRoutes.js
+const express = require('express');
+const router = express.Router();
+const bidParticipationController = require('../Controller/BidAction');
 
-const router = express.Router()
+// Accept a bid request
+router.post('/:id/accept', bidParticipationController.acceptBid);
 
-router.post('/api/bids/:id/publish',ActionController.publish)
+// Reject a bid request
+router.post('/:id/reject', bidParticipationController.rejectBid);
 
-router.post('/api/bids/:id/close',ActionController.close)
+// Place or update a bid
+router.post('/:id/bid', bidParticipationController.placeBid);
 
-module.exports = router
+// Get real-time leaderboard
+router.get('/:id/leaderboard', bidParticipationController.getLeaderboard);
+
+module.exports = router;
