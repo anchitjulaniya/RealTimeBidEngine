@@ -6,8 +6,11 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { Home } from './Pages/Home.jsx';
-import { Signin } from './components/Signin.jsx';
-import { Signup } from './components/Signup.jsx';
+import { Signin } from './Components/Signin.jsx';
+import { Signup } from './Components/Signup.jsx';
+import Dashboard from './Pages/Dashboard.jsx';
+import BidCreation from './Pages/BidCreation.jsx';
+import BidPage from './Pages/BidPage.jsx';
 
 
 const renderFunction = createBrowserRouter([
@@ -17,7 +20,7 @@ const renderFunction = createBrowserRouter([
     children : [
       {
         path: "/",
-        element: <Home />
+        element: <Dashboard />
       },
       {
         path: "/signin",
@@ -28,12 +31,16 @@ const renderFunction = createBrowserRouter([
         element: <Signup />
       },
       {
-        path: "/contact",
-        element: <App />
+        path: "/dashboard",
+        element: <Dashboard />
       },
       {
-        path: "/dashboard", 
-        element: <App />
+        path: "/create-bid", 
+        element: <BidCreation />
+      },
+      {
+        path: "/bid/:id",
+        element: <BidPage />
       }
     ]
   },

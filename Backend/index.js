@@ -63,6 +63,6 @@ io.on('connection', (socket) => {
 
 
 // server is listening
-app.listen(3000, () => {
-  console.log("listening on port 3000");
+app.listen(1000, () => {
+  console.log("listening on port 1000");
 });
