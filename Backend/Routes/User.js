@@ -9,8 +9,8 @@ router.post('/signup', signup);
 router.post('/signin', signin);
 
 //
-router.get('/protected', authMiddleware, (req, res) => {
-  res.json({ message: 'This is a protected route', user: req.user });
-});
+// router.get('/protected', authMiddleware, (req, res) => {
+//   res.json({ message: 'This is a protected route', user: req.user });
+// });
 
 module.exports = router;

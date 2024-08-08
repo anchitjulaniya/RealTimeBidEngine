@@ -8,7 +8,8 @@ const RealTimeUpdateRoute = require("./Routes/RealTimeUpdate");
 const collectionRoute = require("./Routes/BidCollection");
 const dotenv = require('dotenv')
 const authMiddleware = require('./Middleware/authMiddleware')
-
+const userRoute = require('./Routes/User')
+const cors = require('cors')
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
@@ -18,9 +19,16 @@ dotenv.config();
 //Middleware
 app.use(express.json());
 
+const allowedOrigins = [
+  'http://localhost:5173'];
 
-// Database Connection
-// mongoose.connect(`mongodb://localhost:27017/RealTimeBidEngine`, {
+// CORS options
+const corsOptions = {
+  origin: allowedOrigins,
+  credentials: true
+};
+app.use(cors(corsOptions));
+
 mongoose.connect(`${process.env.BASE_URL}`)
 .then(()=>{console.log("Database is Connected Successfully")})
 .catch((Error)=>{console.log(`MongoDB Error : `, Error);
@@ -30,6 +38,7 @@ mongoose.connect(`${process.env.BASE_URL}`)
 // Routes
 // app.use('/api/auth', authRoutes);
 
+app.use('/api/user', userRoute);
 app.use(actionRoute);
 app.use(collectionRoute);
 app.use(inviteRoute);

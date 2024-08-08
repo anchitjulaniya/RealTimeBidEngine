@@ -18,6 +18,8 @@ exports.signup = async (req, res) => {
       password
     });
 
+    console.log(user);
+    
     await user.save();
 
     // Generate a JWT token
