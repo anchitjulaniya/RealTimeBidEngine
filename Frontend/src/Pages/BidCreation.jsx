@@ -4,9 +4,9 @@ import { Url } from '../utils/Url';
 
 const BidCreation = () => {
   const [title, setTitle] = useState('Auction for Electronics');
-  const [bidItems, setBidItems] = useState([{ description: 'Apple iPhone 14', startingBid: 5000 }]);
-  const [startTime, setStartTime] = useState('2024-08-8T10:00:00Z');
-  const [endTime, setEndTime] = useState('2024-08-10T18:00:00Z');
+  const [bidItems, setBidItems] = useState([{ description: '', startingBid: 0 }]);
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
   const [status, setStatus] = useState('draft');
 
   const handleAddItem = () => {
