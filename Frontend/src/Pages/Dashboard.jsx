@@ -11,6 +11,9 @@ const Dashboard = () => {
     const fetchBids = async () => {
       try{
         const response = await axios.get(`${Url}`);
+       
+        console.log("response.data",response.data);
+        
         setBids(response.data);
       }
       catch(error){
@@ -31,7 +34,7 @@ const Dashboard = () => {
       <div className="shadow-xl p-5 bg-white">
         <h2 className='text-xl font-semibold font-mono pb-5'>All Bids</h2>
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {bids.map((bid) => (
+        {bids?.map((bid) => (
           <li key={bid._id} className="bg-white shadow-md rounded p-4 hover:shadow-lg transition">
             <Link to={`/${bid._id}`} className="text-xl font-semibold text-blue-600 hover:underline">
               {bid.title}

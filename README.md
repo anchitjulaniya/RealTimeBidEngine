@@ -45,3 +45,15 @@ Welcome to the **Real-Time Bidding Engine**! This project is a full-stack applic
 ```bash
 git clone https://github.com/yourusername/RealTimeBiddingEngine.git
 cd RealTimeBiddingEngine
+
+### 2. Install Dependencies 📥
+
+#### Backend
+
+Navigate to the `Backend` directory and install the necessary dependencies:
+
+```bash
+cd Backend
+npm install
+
+### 3. 
