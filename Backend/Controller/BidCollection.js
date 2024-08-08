@@ -1,5 +1,5 @@
 // controllers/bidController.js
-const Bid = require('../models/Bid');
+const Bid = require('../Model/BidCollection');
 
 // Create a new bid
 exports.createBid = async (req, res) => {

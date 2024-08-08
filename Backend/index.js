@@ -1,20 +1,30 @@
 const express = require("express");
+const mongoose = require('mongoose')
 const http = require('http'); // http
 const socketIo = require('socket.io'); // socket
 const actionRoute = require("./Routes/BidAction");
 const inviteRoute = require("./Routes/BidInvitation");
 const RealTimeUpdateRoute = require("./Routes/RealTimeUpdate");
 const collectionRoute = require("./Routes/BidCollection");
+const dotenv = require('dotenv')
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
+
+dotenv.config();
 
 //Middleware
 app.use(express.json());
 
 
 // Database Connection
+// mongoose.connect(`mongodb://localhost:27017/RealTimeBidEngine`, {
+mongoose.connect(`${process.env.BASE_URL}`)
+.then(()=>{console.log("Database is Connected Successfully")})
+.catch((Error)=>{console.log(`MongoDB Error : `, Error);
+})
+
 
 // Routes
 app.use(actionRoute);
@@ -38,10 +48,7 @@ io.on('connection', (socket) => {
     });
   });
 
-mongoose.connect("mongodb://localhost:27017/RealTimeBidEngine", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+
 
 // server is listening
 app.listen(3000, () => {
