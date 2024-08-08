@@ -20,11 +20,13 @@ dotenv.config();
 app.use(express.json());
 
 const allowedOrigins = [
-  'http://localhost:5173'];
+  'http://localhost:5173','https://real-time-bid-engine.vercel.app/'];
 
 // CORS options
 const corsOptions = {
   origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 };
 app.use(cors(corsOptions));
