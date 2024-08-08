@@ -2,10 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import axios from 'axios';
+import { Url } from '../utils/Url'
+import { useParams } from 'react-router-dom';
 
-const socket = io('http://localhost:3000');
+const socket = io('http://localhost:1000');
 
 const BidPage = ({ bidId }) => {
+
+
   const [bid, setBid] = useState(null);
   const [bidAmount, setBidAmount] = useState(0);
   const [leaderboard, setLeaderboard] = useState([]);
@@ -36,7 +40,7 @@ const BidPage = ({ bidId }) => {
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">{bid?.title}</h1>
       <ul className="mb-6">
-        {bid?.bidItems.map((item) => (
+        {bid?.bidItems?.map((item) => (
           <li key={item._id} className="bg-white p-4 mb-2 rounded shadow">
             <p className="text-lg font-semibold">{item.description}</p>
             <p className="text-gray-600">Highest Bid: ${item.currentHighestBid}</p>

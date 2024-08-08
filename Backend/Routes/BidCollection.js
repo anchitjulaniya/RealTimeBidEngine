@@ -6,6 +6,9 @@ const bidController = require('../Controller/BidCollection');
 // Create a new bid
 router.post('/', bidController.createBid);
 
+// get all bids
+router.get('/', bidController.getAllBids);
+
 // Get a specific bid by ID
 router.get('/:id', bidController.getBidById);
 

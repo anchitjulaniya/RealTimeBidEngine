@@ -7,17 +7,17 @@ import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
 
 const menuItems = [
   {
-    name: 'Home',
-    to: '#',
+    name: 'Dashboard',
+    to: '/',
   },
   {
-    name: 'About',
-    to: '#',
+    name: 'Create Bid',
+    to: '/create-bid',
   },
-  {
-    name: 'Contact',
-    to: '#',
-  },
+  // {
+  //   name: 'Contact',
+  //   to: '#',
+  // },
   
 ]
 
@@ -59,9 +59,6 @@ export function Header() {
                   className="inline-flex items-center text-sm font-semibold text-gray-800 hover:text-gray-900"
                 >
                   {item.name}
-                  <span>
-                    <ChevronDown className="ml-2 h-4 w-4" />
-                  </span>
                 </Link>
               </li>
             ))}

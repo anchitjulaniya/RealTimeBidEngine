@@ -39,7 +39,7 @@ const renderFunction = createBrowserRouter([
         element: <BidCreation />
       },
       {
-        path: "/bid/:id",
+        path: "/:id",
         element: <BidPage />
       }
     ]

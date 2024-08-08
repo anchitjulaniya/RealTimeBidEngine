@@ -15,6 +15,16 @@ exports.createBid = async (req, res) => {
   }
 };
 
+// Get all bids
+exports.getAllBids = async (req, res) => {
+  try {
+    const bids = await Bid.find() // .populate('participants.userId');
+    res.status(200).json(bids);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching bids', error: error.message });
+  }
+};
+
 // Get a specific bid
 exports.getBidById = async (req, res) => {
   try {

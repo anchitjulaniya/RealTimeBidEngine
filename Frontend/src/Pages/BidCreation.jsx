@@ -29,7 +29,7 @@ const BidCreation = () => {
         endTime,
         status,
       };
-      await axios.post(`${Url}/`, bidData);
+      await axios.post(`${Url}`, bidData);
       alert('Bid created successfully!');
     } catch (error) {
       console.error('Bid creation error', error);
