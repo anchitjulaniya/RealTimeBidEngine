@@ -24,12 +24,6 @@ export default defineConfig({
       external: ['socket.io-client']
 
     }
-  },
-  vite: {
-   server: {
-       watch: {
-           usePolling: true,
-       },
-   },
-},
-});
+  }
+}
+);
