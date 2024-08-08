@@ -8,6 +8,9 @@ import {
   Route,
   Link,
 } from "react-router-dom";
+import { Home } from './Pages/Home.jsx';
+import { Signin } from './Components/Signin.jsx';
+import { Signup } from './Components/Signup.jsx';
 
 
 const renderFunction = createBrowserRouter([
@@ -17,15 +20,15 @@ const renderFunction = createBrowserRouter([
     children : [
       {
         path: "/",
-        element: <App />
+        element: <Home />
       },
       {
-        path: "/home",
-        element: <App />
+        path: "/signin",
+        element: <Signin />
       },
       {
-        path: "/about",
-        element: <App />
+        path: "/signup",
+        element: <Signup />
       },
       {
         path: "/contact",
@@ -37,20 +40,20 @@ const renderFunction = createBrowserRouter([
       }
     ]
   },
-  {
-    element: <AuthLayout />,
-    children: [
-      {
-        path: "login",
-        element: <Login />,
-        loader: redirectIfUser,
-      },
-      {
-        path: "logout",
-        action: logoutUser,
-      },
-    ],
-  },
+  // {
+  //   element: <AuthLayout />,
+  //   children: [
+  //     {
+  //       path: "login",
+  //       element: <Login />,
+  //       loader: redirectIfUser,
+  //     },
+  //     {
+  //       path: "logout",
+  //       action: logoutUser,
+  //     },
+  //   ],
+  // },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
