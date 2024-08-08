@@ -22,6 +22,14 @@ export default defineConfig({
   build: {
     rollupOptions: {
       external: ['socket.io-client']
+
     }
-  }
+  },
+  vite: {
+   server: {
+       watch: {
+           usePolling: true,
+       },
+   },
+},
 });
