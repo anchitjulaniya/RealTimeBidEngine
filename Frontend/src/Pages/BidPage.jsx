@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Url } from '../utils/Url'
 import { useParams } from 'react-router-dom';
 
-const socket = io('http://localhost:1000');
+const socket = io(Url)
 
 const BidPage = ({ bidId }) => {
 
