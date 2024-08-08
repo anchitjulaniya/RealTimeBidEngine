@@ -6,7 +6,10 @@ exports.createBid = async (req, res) => {
   try {
     const bid = new Bid(req.body);
     await bid.save();
-    res.status(201).json(bid);
+    res.status(201).json({
+      status : true,
+      result : bid
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -17,7 +20,10 @@ exports.getBidById = async (req, res) => {
   try {
     const bid = await Bid.findById(req.params.id);
     if (!bid) return res.status(404).json({ message: 'Bid not found' });
-    res.status(200).json(bid);
+    res.status(200).json({
+      status : true,
+      result : bid
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -28,7 +34,10 @@ exports.updateBid = async (req, res) => {
   try {
     const bid = await Bid.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!bid) return res.status(404).json({ message: 'Bid not found' });
-    res.status(200).json(bid);
+    res.status(200).json({
+      status : true,
+      result : bid
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -39,8 +48,11 @@ exports.publishBid = async (req, res) => {
   try {
     const bid = await Bid.findByIdAndUpdate(req.params.id, { status: 'published' }, { new: true });
     if (!bid) return res.status(404).json({ message: 'Bid not found' });
-    // Here you would also handle sending invitations to bidders
-    res.status(200).json(bid);
+    // 
+    res.status(200).json({
+      status : true,
+      result : bid
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -51,7 +63,10 @@ exports.closeBid = async (req, res) => {
   try {
     const bid = await Bid.findByIdAndUpdate(req.params.id, { status: 'closed' }, { new: true });
     if (!bid) return res.status(404).json({ message: 'Bid not found' });
-    res.status(200).json(bid);
+    res.status(200).json({
+      status : true,
+      result : bid
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

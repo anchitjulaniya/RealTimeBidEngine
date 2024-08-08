@@ -7,6 +7,7 @@ const inviteRoute = require("./Routes/BidInvitation");
 const RealTimeUpdateRoute = require("./Routes/RealTimeUpdate");
 const collectionRoute = require("./Routes/BidCollection");
 const dotenv = require('dotenv')
+const authMiddleware = require('./Middleware/authMiddleware')
 
 const app = express();
 const server = http.createServer(app);
@@ -25,8 +26,10 @@ mongoose.connect(`${process.env.BASE_URL}`)
 .catch((Error)=>{console.log(`MongoDB Error : `, Error);
 })
 
-
+// const authRoutes = require('./Routes/User')
 // Routes
+// app.use('/api/auth', authRoutes);
+
 app.use(actionRoute);
 app.use(collectionRoute);
 app.use(inviteRoute);
