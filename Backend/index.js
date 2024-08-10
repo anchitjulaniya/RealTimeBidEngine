@@ -20,7 +20,7 @@ dotenv.config();
 app.use(express.json());
 
 const allowedOrigins = [
-  'http://localhost:5173','https://real-time-bid-engine.vercel.app/'];
+  process.env.FRONTEND_URL];
 
 // CORS options
 const corsOptions = {
@@ -29,6 +29,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 };
+
 app.use(cors(corsOptions));
 
 mongoose.connect(`${process.env.BASE_URL}`)
