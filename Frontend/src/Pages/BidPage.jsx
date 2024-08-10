@@ -7,17 +7,19 @@ import { useParams } from 'react-router-dom';
 
 const socket = io(Url)
 
-const BidPage = ({ bidId }) => {
+const BidPage = () => {
 
-
+  const { bidId } = useParams();
   const [bid, setBid] = useState(null);
   const [bidAmount, setBidAmount] = useState(0);
   const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
     const fetchBid = async () => {
-      const response = await axios.get(`/api/bids/${bidId}`);
+    
+      const response = await axios.get(`${Url}/${bidId}/bids`);
       setBid(response.data);
+      console.log(response.data);
     };
 
     fetchBid();
