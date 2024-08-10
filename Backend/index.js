@@ -1,7 +1,12 @@
 const express = require("express");
 const mongoose = require('mongoose')
 const http = require('http'); // http
-const socketIo = require('socket.io'); // socket
+const socketIo = require('socket.io')(server, {
+  cors: {
+    origin: 'https://real-time-bid-engine.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+  }
+}); // socket
 const actionRoute = require("./Routes/BidAction");
 const inviteRoute = require("./Routes/BidInvitation");
 const RealTimeUpdateRoute = require("./Routes/RealTimeUpdate");
@@ -20,7 +25,8 @@ dotenv.config();
 app.use(express.json());
 
 const allowedOrigins = [
-  process.env.FRONTEND_URL];
+  process.env.FRONTEND_URL
+];
 
 // CORS options
 const corsOptions = {
