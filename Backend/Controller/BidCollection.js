@@ -29,6 +29,7 @@ exports.getAllBids = async (req, res) => {
 exports.getBidById = async (req, res) => {
   try {
     const bid = await Bid.findById(req.params.id);
+    console.log(bid)
     if (!bid) return res.status(404).json({ message: 'Bid not found' });
     res.status(200).json({
       status : true,

@@ -1,24 +1,20 @@
-// Dashboard.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Url } from '../utils/Url'
+import { Url } from '../utils/Url';
+import BidCard from './BidCard';
 
 const Dashboard = () => {
   const [bids, setBids] = useState([]);
 
   useEffect(() => {
     const fetchBids = async () => {
-      try{
+      try {
         const response = await axios.get(`${Url}`);
-       
-        console.log("response.data",response.data);
-        
+        console.log("response.data", response.data);
         setBids(response.data);
-      }
-      catch(error){
+      } catch (error) {
         console.log(error);
-        
       }
     };
 
@@ -32,16 +28,12 @@ const Dashboard = () => {
         Create New Bid
       </Link>
       <div className="shadow-xl p-5 bg-white">
-        <h2 className='text-xl font-semibold font-mono pb-5'>All Bids</h2>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {bids?.map((bid) => (
-          <li key={bid._id} className="bg-white shadow-md rounded p-4 hover:shadow-lg transition">
-            <Link to={`/${bid._id}`} className="text-xl font-semibold text-blue-600 hover:underline">
-              {bid.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+        <h2 className="text-xl font-semibold font-mono pb-5">All Bids</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {bids?.map((bid) => (
+            <BidCard key={bid._id} bid={bid} />
+          ))}
+        </div>
       </div>
     </div>
   );

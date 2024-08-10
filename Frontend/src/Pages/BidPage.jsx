@@ -9,8 +9,8 @@ const socket = io(Url)
 
 const BidPage = () => {
 
-  const parmas = useParams();
-  console.log(parmas);
+  const { id } = useParams();
+  
   
   const [bid, setBid] = useState(null);
   const [bidAmount, setBidAmount] = useState(0);
@@ -19,7 +19,7 @@ const BidPage = () => {
   useEffect(() => {
     const fetchBid = async () => {
     
-      const response = await axios.get(`${Url}/${bidId}/bids`);
+      const response = await axios.get(`${Url}/${id}`);
       setBid(response.data);
       console.log(response.data);
     };
@@ -34,10 +34,10 @@ const BidPage = () => {
     return () => {
       socket.off('updateLeaderboard');
     };
-  }, [bidId]);
+  }, [id]);
 
   const handlePlaceBid = () => {
-    socket.emit('placeBid', { bidId, bidAmount });
+    socket.emit('placeBid', { id, bidAmount });
   };
 
   return (
