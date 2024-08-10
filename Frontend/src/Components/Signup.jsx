@@ -1,6 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Url } from "../utils/Url";
+import { toast }  from "react-toastify";
 
 export function Signup() {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ export function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:3000/api/user/signup`, {
+      const res = await fetch(`${Url}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +29,12 @@ export function Signup() {
         body: JSON.stringify(formData),
         credentials: "include",
       });
+
+      
       const data = await res.json();
+      if(res.ok) {
+        toast.success("Signup successful");
+      }
       console.log(data);
 
       navigate("/signin");

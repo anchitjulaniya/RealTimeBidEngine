@@ -1,6 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Url } from "../utils/Url";
+import { toast }  from "react-toastify";
 
 export function Signin() {
   const navigate = useNavigate();
@@ -18,7 +20,7 @@ export function Signin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:3000/api/user/signin`, {
+      const res = await fetch(`${Url}/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,8 +28,23 @@ export function Signin() {
         body: JSON.stringify(formData),
         credentials: "include",
       });
+
       const data = await res.json();
       console.log(data);
+
+      if (res.ok) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        
+        console.log('Signin successful:', data);
+
+        toast.success("Signin successful");
+        // Navigate to the home page
+        navigate("/");
+      } else {
+        toast.error("Signin failed");
+        console.log('Signin failed:', data.message);
+      }
 
       navigate("/");
     } catch (error) {
