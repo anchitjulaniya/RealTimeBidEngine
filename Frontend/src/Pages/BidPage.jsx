@@ -9,7 +9,9 @@ const socket = io(Url)
 
 const BidPage = () => {
 
-  const { bidId } = useParams();
+  const parmas = useParams();
+  console.log(parmas);
+  
   const [bid, setBid] = useState(null);
   const [bidAmount, setBidAmount] = useState(0);
   const [leaderboard, setLeaderboard] = useState([]);
