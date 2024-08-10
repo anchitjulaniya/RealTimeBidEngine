@@ -20,7 +20,7 @@ export function Signin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${Url}/signin`, {
+      const res = await fetch(`${Url}/api/user/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

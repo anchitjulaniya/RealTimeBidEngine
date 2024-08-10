@@ -21,7 +21,7 @@ export function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${Url}/signup`, {
+      const res = await fetch(`${Url}/api/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
