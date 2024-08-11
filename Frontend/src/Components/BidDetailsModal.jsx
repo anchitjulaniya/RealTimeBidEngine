@@ -100,10 +100,10 @@ const BidDetailsModal = ({ bid, isOpen, onClose }) => {
               <strong className="block text-lg">Status:</strong>
               <span>{bid.status}</span>
             </div>
-            <div className="md:w-1/2">
+            {/* <div className="md:w-1/2">
               <strong className="block text-lg">End Time:</strong>
               <span>{new Date(bid.endTime).toLocaleString()}</span>
-            </div>
+            </div> */}
           </div>
           <div>
             <strong className="block text-lg">Description:</strong>
