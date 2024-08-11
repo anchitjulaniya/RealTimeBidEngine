@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react'; // Ensure useContext is imp
 import { FaRupeeSign } from 'react-icons/fa';
 import { myContext } from '../utils/Context';
 import { toast } from 'react-toastify';
-
+import { Url } from '../utils/Url';
 
 const BidDetailsModal = ({ bid, isOpen, onClose }) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
@@ -42,13 +42,13 @@ const BidDetailsModal = ({ bid, isOpen, onClose }) => {
       setError('');
   
       // Assuming you have an API endpoint like `/bids/:id/place`
-      const response = await fetch(`/bids/${bid._id}/bid`, { 
+      const response = await fetch(`${Url}/${bid._id}/bid`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: currentUser.id,
+          userId: currentUser?.id,
           itemId: selectedItem,
           amount: bidAmount,
         }),
@@ -159,11 +159,14 @@ const BidDetailsModal = ({ bid, isOpen, onClose }) => {
                       <li key={index} className="ml-4">
                         <div className="font-semibold">{participant.name}</div>
                         <div className="text-sm text-gray-600">
+                          <strong>Id:</strong> {participant._id}
+                        </div>
+                        {/* <div className="text-sm text-gray-600">
                           <strong>Email:</strong> {participant.email || 'No email provided.'}
                         </div>
                         <div className="text-sm text-gray-600">
                           <strong>Bid Amount:</strong> ₹{participant.bidAmount || 'No bid amount provided.'}
-                        </div>
+                        </div> */}
                       </li>
                     ))}
                   </ul>

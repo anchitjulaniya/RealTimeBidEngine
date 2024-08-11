@@ -43,47 +43,56 @@ exports.rejectBid = async (req, res) => {
 exports.placeBid = async (req, res) => {
   try {
     const { userId, itemId, amount } = req.body;
+    
+    // Validate the input
+    if (!userId || !itemId || !amount) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
 
     // Fetch the bid document
     const bid = await Bid.findById(req.params.id);
-    if (!bid) return res.status(404).json({ message: 'Bid not found' });
+    if (!bid) {
+      return res.status(404).json({ message: 'Bid not found' });
+    }
 
-    // Find the participant in the bid
+    // Find the participant
     let participant = bid.participants.find(p => p.userId.toString() === userId);
-    if (!participant) return res.status(400).json({ message: 'User not participating' });
 
-    // Check if the user already placed a bid on this item
-    const existingBid = participant.bids.find(b => b.itemId.toString() === itemId);
-    if (existingBid) {
-      // Update the existing bid amount
-      existingBid.amount = amount;
+    if (!participant) {
+      // Add the user to participants with their details if not already present
+      participant = {
+        userId
+      }
+
+      bid.participants.push(participant);
+
     } else {
-      // Add a new bid for the item
-      participant.bids.push({ itemId, amount });
+      // Check if the user already placed a bid on this item
+      const existingBid = participant.bids.find(b => b.itemId.toString() === itemId);
+      if (existingBid) {
+        // Update the existing bid amount
+        existingBid.amount = amount;
+      } else {
+        // Add a new bid for the item
+        participant.bids.push({ itemId, amount });
+      }
     }
-
-    // Update the current highest bid for the item
-    const bidItem = bid.bidItems.find(i => i._id.toString() === itemId);
-    if (bidItem) {
-      bidItem.currentHighestBid = Math.max(
-        ...bid.participants.flatMap(p => p.bids.filter(b => b.itemId.toString() === itemId).map(b => b.amount)),
-        amount
-      );
-    }
-
     // Save the bid with updated information
     await bid.save();
 
     // Emit bid update to connected clients
-    req.app.get('io').emit('bidUpdate', { bidId: bid._id, participantId: userId, itemId, amount });
+    // req.app.get('io').emit('bidUpdate', { bidId: bid._id, participantId: userId, itemId, amount });
 
     // Send a successful response with the updated bid
     res.status(200).json({ success: true, bid });
   } catch (error) {
+    console.error('Error placing bid:', error);
     // Handle any errors that occur during the process
     res.status(400).json({ error: error.message });
   }
 };
+
+
 
 
 // Get real-time leaderboard
