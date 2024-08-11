@@ -7,7 +7,7 @@ import { toast }  from "react-toastify";
 export function Signup() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -30,14 +30,17 @@ export function Signup() {
         credentials: "include",
       });
 
-      
       const data = await res.json();
+      // console.log("SignUp data", data);
+      
       if(res.ok) {
+        navigate("/signin");
         toast.success("Signup successful");
+      }else{
+        toast.error("Signup failed");
       }
       console.log(data);
 
-      navigate("/signin");
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +79,7 @@ export function Signup() {
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="text"
                       placeholder="Full Name"
-                      id="username"
+                      id="name"
                       onChange={handleChange}
                     ></input>
                   </div>

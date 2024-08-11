@@ -1,11 +1,15 @@
 import { ArrowRight } from "lucide-react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { Url } from "../utils/Url";
 import { toast }  from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { myContext } from "../utils/Context";
+
 
 export function Signin() {
   const navigate = useNavigate();
+  const { currentUser, setCurrentUser } = useContext(myContext)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,6 +23,7 @@ export function Signin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("formData", formData);
     try {
       const res = await fetch(`${Url}/api/user/signin`, {
         method: "POST",
@@ -30,23 +35,22 @@ export function Signin() {
       });
 
       const data = await res.json();
-      console.log(data);
+      console.log("SignIn data",data);
 
       if (res.ok) {
+        setCurrentUser(data.user);
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         
         console.log('Signin successful:', data);
 
         toast.success("Signin successful");
-        // Navigate to the home page
+        
         navigate("/");
       } else {
         toast.error("Signin failed");
         console.log('Signin failed:', data.message);
       }
-
-      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -61,13 +65,13 @@ export function Signin() {
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               Don&apos;t have an account?{" "}
-              <a
-                href="#"
+              <Link
+                to="/signup"
                 title=""
                 className="font-semibold text-black transition-all duration-200 hover:underline"
               >
                 Create a free account
-              </a>
+              </Link>
             </p>
             <form onSubmit={handleSubmit} className="mt-8">
               <div className="space-y-5">

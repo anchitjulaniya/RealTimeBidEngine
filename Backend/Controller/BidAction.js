@@ -43,37 +43,48 @@ exports.rejectBid = async (req, res) => {
 exports.placeBid = async (req, res) => {
   try {
     const { userId, itemId, amount } = req.body;
+
+    // Fetch the bid document
     const bid = await Bid.findById(req.params.id);
     if (!bid) return res.status(404).json({ message: 'Bid not found' });
 
-    // Find participant
+    // Find the participant in the bid
     let participant = bid.participants.find(p => p.userId.toString() === userId);
     if (!participant) return res.status(400).json({ message: 'User not participating' });
 
-    // Update or add bid
+    // Check if the user already placed a bid on this item
     const existingBid = participant.bids.find(b => b.itemId.toString() === itemId);
     if (existingBid) {
+      // Update the existing bid amount
       existingBid.amount = amount;
     } else {
+      // Add a new bid for the item
       participant.bids.push({ itemId, amount });
     }
 
-    // Update highest bid for the item
-    const bidItem = bid.bidItems.find(i => i.itemId.toString() === itemId);
+    // Update the current highest bid for the item
+    const bidItem = bid.bidItems.find(i => i._id.toString() === itemId);
     if (bidItem) {
-      bidItem.currentHighestBid = Math.max(...bid.participants.flatMap(p => p.bids.filter(b => b.itemId.toString() === itemId).map(b => b.amount)), bidItem.currentHighestBid);
+      bidItem.currentHighestBid = Math.max(
+        ...bid.participants.flatMap(p => p.bids.filter(b => b.itemId.toString() === itemId).map(b => b.amount)),
+        amount
+      );
     }
 
+    // Save the bid with updated information
     await bid.save();
 
-    // Emit bid update to clients
+    // Emit bid update to connected clients
     req.app.get('io').emit('bidUpdate', { bidId: bid._id, participantId: userId, itemId, amount });
 
-    res.status(200).json(bid);
+    // Send a successful response with the updated bid
+    res.status(200).json({ success: true, bid });
   } catch (error) {
+    // Handle any errors that occur during the process
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Get real-time leaderboard
 exports.getLeaderboard = async (req, res) => {

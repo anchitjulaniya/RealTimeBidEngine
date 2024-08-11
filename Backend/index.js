@@ -19,7 +19,7 @@ const server = http.createServer(app);
 // Initialize Socket.IO with CORS options
 const io = socketIo(server, {
   cors: {
-    origin:  'https://real-time-bid-engine.vercel.app'
+    origin:  'https://real-time-bid-engine.vercel.app' //  'http://localhost:5173' 
     ,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -30,7 +30,7 @@ const io = socketIo(server, {
 // Middleware
 app.use(express.json());
 
-const allowedOrigins =  'https://real-time-bid-engine.vercel.app';
+const allowedOrigins =  'https://real-time-bid-engine.vercel.app'; //'http://localhost:5173' 
 
 // CORS options
 const corsOptions = {
